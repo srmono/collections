@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "49d9c1ba-e883-4dbe-be7d-aa434a10297d",
+		"name": "1linkedin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"check user log in and get token\", () => {\r",
+									"    pm.response.to.have.status(\"OK\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Has Token\", () => {\r",
+									"    const data = pm.response.json();\r",
+									"    pm.environment.set('token', data.token)\r",
+									"    return 'token' in data;\r",
+									"})\r",
+									"\r",
+									"postman.setNextRequest(\"Post Users\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let email = \"bvsrao92@gmail.com\"\r",
+									"pm.environment.set(\"email\", email)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get User Infor By Toekn\", () => {\r",
+									"    pm.response.to.have.status(\"OK\")\r",
+									"})\r",
+									"\r",
+									"postman.setNextRequest(null)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Post Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setNextRequest(\"Get By token\")\r",
+									"// const response = pm.response.json();\r",
+									"\r",
+									"// pm.test(\"Should contain isvalid\", () => {\r",
+									"//     pm.expect(response.json.isValid).to.eql(200);\r",
+									"// })"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// var users = [\r",
+									"//     {\r",
+									"//     \"name\": \"judvin\",\r",
+									"//     \"email\": \"judvin@gmail.com\",\r",
+									"//     \"password\": \"123456\"\r",
+									"//     },\r",
+									"//     {\r",
+									"//         \"name\": \"deepak\",\r",
+									"//         \"email\": \"deepak@gmail.com\",\r",
+									"//         \"password\": \"123456\"\r",
+									"//     },\r",
+									"//     {\r",
+									"//         \"name\": \"akhil\",\r",
+									"//         \"email\": \"akhil@gmail.com\",\r",
+									"//         \"password\": \"123456\"\r",
+									"//     }\r",
+									"// ]\r",
+									"\r",
+									"// var currentUser = users.shift();\r",
+									"// pm.environment.set(\"user\", currentUser);\r",
+									"\r",
+									"// // var customers = pm.environment.get(\"customers\");\r",
+									"\r",
+									"// // if(!customers){\r",
+									"// //     customers = [\"ust\", \"google\", \"yahoo\", \"facebook\"]\r",
+									"// // }\r",
+									"// // //var customers = [\"ust\", \"google\", \"yahoo\", \"facebook\"]\r",
+									"\r",
+									"// // var currentCustomer = customers.shift();\r",
+									"// // pm.environment.set(\"customer\", currentCustomer)\r",
+									"\r",
+									"// // pm.environment.set('customers', customers)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Venkat\",\r\n    \"email\": \"bvsrao999@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "profile",
+			"item": [
+				{
+					"name": "getSingleProfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/profile/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYxOGU4ZWNkYTY1NzQxOTcwZjZlNmU3In0sImlhdCI6MTYwOTEzMDI4OCwiZXhwIjoxNjA5MTMzODg4fQ.oTPQVopkWmB-PrIyA4VCHEyQccISKdbk2WgJ5aYLJAQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profile photo",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/profile/user/5f18e8ecda65741970f6e6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile",
+								"user",
+								"5f18e8ecda65741970f6e6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Experience",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYxOGU4MmFkYTY1NzQxOTcwZjZlNmU2In0sImlhdCI6MTU5NTk4NTYwNywiZXhwIjoxNTk1OTg5MjA3fQ.Yzt9g1JO9-sUS1gMUgHGXnYXdKR8IU5k6r9OPxrYPy0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"title\":\"ui dev new \", \r\n\"company\":\"juniper\", \r\n\"location\":\"Bangalore\", \r\n\"from\":\"5-10-2019\",\r\n\"to\":\"6-10-2020\", \r\n\"current\":false, \r\n\"description\":\" UI project\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/profile/experience",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile",
+								"experience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Education",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYxOGU4MmFkYTY1NzQxOTcwZjZlNmU2In0sImlhdCI6MTU5NTk4NTYwNywiZXhwIjoxNTk1OTg5MjA3fQ.Yzt9g1JO9-sUS1gMUgHGXnYXdKR8IU5k6r9OPxrYPy0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"title\":\"ui dev new \", \r\n\"company\":\"juniper\", \r\n\"location\":\"Bangalore\", \r\n\"from\":\"5-10-2019\",\r\n\"to\":\"6-10-2020\", \r\n\"current\":false, \r\n\"description\":\" UI project\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/profile/experience",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile",
+								"experience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Exp By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYxOGU4MmFkYTY1NzQxOTcwZjZlNmU2In0sImlhdCI6MTU5NTg5OTY4MywiZXhwIjoxNTk1OTAzMjgzfQ.CqY6Co5z41txR0sxAUZ0p0sXq4tr2v-Fry7zpbMyyzs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/profile/experience/5f1f7f6ac21dde16084c3550",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile",
+								"experience",
+								"5f1f7f6ac21dde16084c3550"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Education By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYxOGU4MmFkYTY1NzQxOTcwZjZlNmU2In0sImlhdCI6MTU5NTk4NTYwNywiZXhwIjoxNTk1OTg5MjA3fQ.Yzt9g1JO9-sUS1gMUgHGXnYXdKR8IU5k6r9OPxrYPy0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/profile/education/5f20d1d17354b32d54605f78",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"profile",
+								"education",
+								"5f20d1d17354b32d54605f78"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "posts",
+			"item": []
+		}
+	]
+}
